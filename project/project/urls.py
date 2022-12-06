@@ -18,21 +18,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ejemplo.views import index
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('saludar/', index), # ESTA ES LA NUEVA FUNCTION
-]
-
 from django.contrib import admin
 from django.urls import path
-from ejemplo.views import index, monstrar_familiares,saludar_a, sumar, buscar
-urlpatterns =   [
+from ejemplo.views import (index, monstrar_familiares,saludar_a, sumar, buscar, BuscarFamiliar)
+
+urlpatterns = [
         path('admin/', admin.site.urls),
         path('saludar/', index),
         path('saludar-a/<nombre>/', saludar_a),
         path('sumar/<int:a>/<int:b>/', sumar),
         path('buscar/', buscar),
-         path('mi-familia/', monstrar_familiares), # nueva vista
+        path('mi-familia/', monstrar_familiares), # nueva vista
+        path('mi-familia/buscar', BuscarFamiliar.as_view()),
 ]
 
