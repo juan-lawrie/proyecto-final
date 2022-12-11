@@ -20,7 +20,7 @@ from django.urls import path
 from ejemplo.views import index
 from django.contrib import admin
 from django.urls import path
-from ejemplo.views import (index, monstrar_familiares,saludar_a, sumar, buscar, BuscarFamiliar)
+from ejemplo.views import (index, monstrar_familiares,saludar_a, sumar, buscar, BuscarFamiliar, AltaFamiliar, ActualizarFamiliar)
 
 urlpatterns = [
         path('admin/', admin.site.urls),
@@ -30,5 +30,7 @@ urlpatterns = [
         path('buscar/', buscar),
         path('mi-familia/', monstrar_familiares), # nueva vista
         path('mi-familia/buscar', BuscarFamiliar.as_view()),
+        path('mi-familia/alta', AltaFamiliar.as_view()),
+        path('mi-familia/actualizar/<int:pk>', ActualizarFamiliar.as_view()),
 ]
 
