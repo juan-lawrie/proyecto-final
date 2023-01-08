@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from ejemplo.models import Familiar
-from ejemplo.forms import Buscar 
 from django.views import View 
 from ejemplo.forms import Buscar, FamiliarForm
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView, DetailView
+
 
 def index(request):
     return render(request, "ejemplo/saludar.html")
@@ -88,3 +88,33 @@ class ActualizarFamiliar(View):
                                                       'msg_exito': msg_exito})
       
       return render(request, self.template_name, {"form": form})
+    
+class BorrarFamiliar(View):
+  template_name = 'ejemplo/familiares.html'
+  
+  def get(self, request, pk): 
+      familiar = get_object_or_404(Familiar, pk=pk)
+      familiar.delete()
+      familiares = Familiar.objects.all()
+      return render(request, self.template_name, {'lista_familiares': familiares})
+
+
+class FamiliarList(ListView):
+    model = Familiar
+
+class FamiliarCrear(CreateView):
+    model = Familiar
+    success_url = "/panel-familia"
+    fields = ["nombre", "direccion", "numero_pasaporte"]
+
+class FamiliarBorrar(DeleteView):
+    model = Familiar
+    success_url = "/panel-familia"
+
+class FamiliarActualizar(UpdateView):
+    model = Familiar
+    success_url = "/success_updated_message"
+    fields = ["nombre", "direccion", "numero_pasaporte"]
+
+class FamiliarDetalle(DetailView):
+    model = Familiar
