@@ -1,0 +1,22 @@
+{% extends 'Trabajo_final/base.html' %}
+
+{% block contenido %}
+{% if user.is_authenticated %}
+    <a href="{% url 'Trabajo-final-crear' %}">Crear Post</a>
+    <a href="{% url 'Trabajo-final-mensajes-listar' %}">Ver Mensajes</a>
+    <a href="{% url 'Trabajo-final-users-actualizar' user.id %}">Actualizar User</a>
+    <a href="{% url 'Trabajo-final-avatars-actualizar' user.id %}">Actualizar Avatar</a>
+{% endif %}
+<ul>
+{% for post in object_list %}
+    <li>
+        {{post.publicado_el}} - - {{post.titulo}} 
+        {% if user.is_superuser %}
+            <a href="{% url 'Trabajo-final-borrar' post.id %}">Borrar</a>
+            <a href="{% url 'Trabajo-final-actualizar' user.id %}">Actualizar</a>
+        {% endif %}
+        <a href="{% url 'Trabajo-final-detalle' post.id %}">Ver</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
